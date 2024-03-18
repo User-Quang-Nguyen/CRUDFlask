@@ -25,7 +25,6 @@ def get_post(id, check_author = True):
         ' From post p join user u On p.author_id = u.id'
         ' Where p.id = ?', (id,)
     ).fetchone()
-    
     if post is None:
         abort(404, f"Post id {id} doesn't exist.")
         

@@ -7,9 +7,8 @@ app = flask.Blueprint("api_healthcheck", __name__)
 
 @app.route('/healcheck', methods=['GET'])
 def healcheck():
-    check = False
-    url = 'http://127.0.0.1:8000/'
-    
+    url = 'http://127.0.0.1:8000/B1'
+    print("API healcheck")
     try:
         response = requests.get(url)
         if response.status_code == 200:

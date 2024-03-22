@@ -1,8 +1,10 @@
 import requests
+import flask
 from flask import Flask, jsonify
 
-app = Flask(__name__)
-    
+app = flask.Blueprint("api_healthcheck", __name__)
+
+
 @app.route('/healcheck', methods=['GET'])
 def healcheck():
     check = False
@@ -23,5 +25,5 @@ def healcheck():
                 'status': "faild"
             }), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)

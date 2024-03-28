@@ -1,8 +1,8 @@
-from flask import Flask
-from api.B1_service import app as api_service
-from api.B1_healcheck import app as api_healthcheck
-from api.B3_profile import app as profile
-from api_dto.api_exeption import error_handler
+from flask import Flask, jsonify
+from Tuan02.api.service import app as api_service
+from Tuan02.api.healcheck import app as api_healthcheck
+from Tuan02.api.profile import app as profile
+from api_dto.api_exeption import *
 
 app = Flask(__name__)
 app.register_error_handler(Exception, error_handler)

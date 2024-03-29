@@ -4,6 +4,9 @@ import json
 import ast
 import logging
 from ulti.cache_error import CacheError
+from repo.redis import RedisCache
+
+cache = RedisCache()
 
 class PostgreDatabase:
     def __init__(self):
@@ -33,17 +36,7 @@ class PostgreDatabase:
 
     def get_profile(self, name):
         cache_key = f"get_profile_{name}"
-        try:
-            redis_client = redis.Redis(host="localhost", port=6379, decode_responses=True)
-            cached_data = redis_client.get(cache_key)
-            
-            if cached_data is not None:
-                my_data = ast.literal_eval(cached_data)
-                print("Cache redis")
-                return my_data
-            
-        except Exception as e:
-            raise CacheError("Redis server is not running")
+        cache.check_cache(cache_key)
         
         query = 'Select * from profile where name = %s'
         conn = self.get_connection()
@@ -51,11 +44,7 @@ class PostgreDatabase:
         try:
             data = cur.execute(query, (name,))
             data = cur.fetchall()
-            
-            json_string = json.dumps(data)
-            redis_client.setex(cache_key, 15*60, json_string)
-            cached_data = redis_client.get(cache_key)
-            
+            cache.set_cache(cache_key, data)
             print("Postgres")
             return data
         finally:

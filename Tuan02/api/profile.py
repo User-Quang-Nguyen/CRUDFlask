@@ -5,11 +5,12 @@ from api_dto.response import ResponseDTO
 import flask
 
 app = flask.Blueprint("profile", __name__)
-requestdto = RequestDTO(request=request)
-responsedto = ResponseDTO()
+
 @app.route('/data/profile', methods=['POST'])
 def read_infor():
     try: 
+        requestdto = RequestDTO(request=request)
+        responsedto = ResponseDTO()
         requestdto.check_input_name()
         my_data = request.json
         name = my_data.get('name')

@@ -6,8 +6,8 @@ class ResponseDTO:
         pass
     
     def response_infor(self, list_response):
-        # if len(list_response) == 0:
-        #     raise InputValidationException("User does not exist")
+        if len(list_response) == 0:
+            raise InputValidationException("User does not exist")
         response_json = []
         for item in list_response:
             response_json.append({
